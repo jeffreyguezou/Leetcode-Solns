@@ -38,6 +38,9 @@ console.log(checkAnagram("test", "rest"));
 function validAnagram(str1, str2) {
   let freqcounter1 = {};
   let freqcounter2 = {};
+  if (str1.length !== str2.length) {
+    return false;
+  }
 
   for (let i in str1) {
     let char = str1[i];
@@ -57,3 +60,4 @@ function validAnagram(str1, str2) {
 }
 console.log(validAnagram("hjbcsdk", "sjcdhk"));
 console.log(validAnagram("anagram", "nagaram"));
+console.log(validAnagram("a", "ab"));
