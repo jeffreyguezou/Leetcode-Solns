@@ -1,62 +1,36 @@
-class str {
-  constructor(str) {
-    this.str = str;
-  }
-  slice(a, b) {
-    let returnVal = "";
-    for (let i = a; i <= b; i++) {
-      returnVal += this.str[i];
-    }
-    return returnVal;
-  }
-  split(char) {
-    const result = [];
+function split(str, limiter) {
+  let i = 0;
 
-    // Initialize variables to keep track of the start and end indices
-    let start = 0;
-    let end = 0;
+  let subString = "";
+  let result = [];
 
-    // Iterate through the string
-    while (end < this.str.length) {
-      // Find the index of the separator in the string
-      end = findSeparator(this.str, char, start);
+  while (i < str.length) {
+    if (limiter.length === 0) {
+      result.push(str[i]);
+    } else {
+      if (str[i] != limiter[0]) {
+        subString += str[i];
+      } else {
+        for (let j = 0; j < limiter.length; j++) {
+          if (str[i + j] != limiter[j]) {
+            subString += str[i];
+            break;
+          }
 
-      // Add the substring from start to end to the result array
-      let substring = "";
-      for (let i = start; i < end; i++) {
-        substring += this.str[i];
-      }
-      result.push(substring);
-
-      // Move the start index to the next character after the separator
-      start = end + char.length;
-    }
-
-    return result;
-  }
-
-  // Helper function to find the index of the separator in the string
-  static findSeparator(str, char, start) {
-    let i = start;
-    while (i < str.length) {
-      let match = true;
-      for (let j = 0; j < char.length; j++) {
-        if (str[i + j] !== char[j]) {
-          match = false;
-          break;
+          if (j === limiter.length - 1) {
+            result.push(subString);
+            subString = "";
+          }
         }
       }
-      if (match) {
-        return i;
-      }
-      i++;
+      if (subString && i === str.length - 1) result.push(subString);
     }
-    return str.length;
+    i++;
   }
+  return result;
 }
 
-let str1 = new str("JfeffreyJeffreyJeffrey");
-let sliced = str1.slice(2, 4);
-
-let spt = str1.split("ff");
-console.log(spt);
+console.log(split("JeffreyfRajffguefzffou", "ff"));
+console.log(split("abcdcgefcd", "c"));
+console.log(split("Jeffrey Raj Guezou", ""));
+console.log(split("Jeffrey Raj Guezou", " "));
